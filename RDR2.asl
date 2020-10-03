@@ -5,10 +5,10 @@ state("RDR2")
 
 state("RDR2", "Steam")
 {
-	byte mission_counter: 0x3E30BE0, 0x38;
-	uint loading: 0x5710F20, 0x27900, 0xA4;
-	byte checkpoint: 0x590E430, 0x50; //0x50=next, 0x48=current
-	uint mission: 0x52B1C40, 0x1A4;
+	byte mission_counter: 0x3E36B50, 0x38;
+	uint loading: 0x3C0C728, 0x2BC44;
+	byte checkpoint: 0x59150B0, 0x50; //0x50=next, 0x48=current
+	uint mission: 0x3E71EB8;
 	int in_cutscene: 0x49744D8, 0xB208;
 }
 
