@@ -9,7 +9,7 @@ state("RDR2", "Steam")
 	uint loading: 0x3C0C728, 0x2BC44;
 	byte checkpoint: 0x59150B0, 0x50; //0x50=next, 0x48=current
 	uint mission: 0x3E71EB8;
-	int in_cutscene: 0x49744D8, 0xB208;
+	int in_cutscene: 0x52AEE68, 0x1038;
 }
 
 state("RDR2", "RGL")
