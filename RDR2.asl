@@ -37,7 +37,7 @@ init
 {
 	switch (modules.First().ModuleMemorySize)
 	{
-		case 122827776:
+		case 122846208:
 			version = "Steam";
 			break;
 		default:
