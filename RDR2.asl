@@ -6,7 +6,8 @@ state("RDR2")
 state("RDR2", "Steam")
 {
 	byte mission_counter: 0x3E36B50, 0x38;
-	uint loading: 0x3E74EB8, 0x200, 0x174;
+	int loading: 0x3E74EB8, 0x200, 0x174;
+	int save_loading: 0x59FFCF0, 0x1A48;
 	byte checkpoint: 0x59150B0, 0x50; //0x50=next, 0x48=current
 	uint mission: 0x5ACE798, 0xC;
 	int in_cutscene: 0x497A448, 0xB208;
@@ -167,7 +168,6 @@ startup
 
 init
 {
-	print(modules.First().ModuleMemorySize.ToString());
 	switch (modules.First().ModuleMemorySize)
 	{
 		case 122846208:
@@ -194,7 +194,7 @@ start
 {
 	bool flag_ch1 = (settings["starter_chapter1"] && current.mission_counter == 0 && current.checkpoint == 1 && old.in_cutscene != 0 && current.in_cutscene == 0);
 
-	bool flag_load = (settings["starter_loading"] && old.loading > 32700 && current.loading < 32700);
+	bool flag_load = (settings["starter_loading"] && old.save_loading > 0 && current.save_loading == 0);
 
 	vars.shouldStart = flag_ch1 || flag_load;
 
@@ -214,5 +214,5 @@ split
 
 isLoading
 {
-	return (current.loading != 0);
+	return current.loading != 0;
 }
