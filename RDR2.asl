@@ -194,7 +194,7 @@ start
 {
 	bool flag_ch1 = (settings["starter_chapter1"] && current.mission_counter == 0 && current.checkpoint == 1 && old.in_cutscene != 0 && current.in_cutscene == 0);
 
-	bool flag_load = (settings["starter_loading"] && old.loading == 32758 && current.loading != 32758);
+	bool flag_load = (settings["starter_loading"] && old.loading > 32700 && current.loading < 32700);
 
 	vars.shouldStart = flag_ch1 || flag_load;
 
