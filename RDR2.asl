@@ -6,22 +6,21 @@ state("RDR2")
 state("RDR2", "Steam")
 {
 	byte mission_counter: 0x3E36B50, 0x38;
-	int loading: 0x39B5E9C;
-	int save_loading: 0x59FFCF0, 0x1A48;
+	long loading: 0x59FF754;
 	byte checkpoint: 0x59150B0, 0x50;
 	string255 mission: 0x5243900;
-	int in_cutscene: 0x497A448, 0xB208;
+	byte in_cutscene: 0x497A448, 0xB208;
 }
 
 state("RDR2", "RGL")
 {
 	//probably doesn't work
 	byte mission_counter: 0x3E36B50, 0x38;
-	int loading: 0x59FF754;
+	byte loading: 0x39B5E9C;
 	int save_loading: 0x59FFCF0, 0x1A48;
 	byte checkpoint: 0x59150B0, 0x50;
 	string255 mission: 0x3E251C0;
-	int in_cutscene: 0x497A448, 0xB208;
+	byte in_cutscene: 0x497A448, 0xB208;
 }
 
 startup
@@ -47,7 +46,8 @@ startup
 		{"SEN1", "-The First Shall Be Last"},
 		{"UTP1", "-Blessed Are The Meek"},
 		{"RDOWN3", "-Money Lending And Other Sins III"},
-		//{"", "-We Loved Once and True II"},
+		{"RMARY2", "-We Loved Once and True II"},	
+		//{"RMUD33", "-Pouring Fourth Oil III"},
 		{"RABI1", "-A Fisher of Men"},
 		{"UTP2", "-An American Pastoral Scene"},
 		{"RHMR0", "-The Spines of America"},
@@ -189,7 +189,8 @@ start
 {
 	bool flag_ch1 = (settings["starter_chapter1"] && current.mission_counter == 0 && current.checkpoint == 1 && old.in_cutscene != 0 && current.in_cutscene == 0);
 
-	bool flag_load = (settings["starter_loading"] && old.save_loading > 0 && current.save_loading == 0);
+	bool flag_load = (settings["starter_loading"] && current.loading != old.loading && old.loading > 0 && old.loading < 32768);
+	print(current.loading.ToString());
 
 	vars.shouldStart = flag_ch1 || flag_load;
 
