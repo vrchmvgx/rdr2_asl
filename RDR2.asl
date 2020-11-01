@@ -189,8 +189,7 @@ start
 {
 	bool flag_ch1 = (settings["starter_chapter1"] && current.mission_counter == 0 && current.checkpoint == 1 && old.in_cutscene != 0 && current.in_cutscene == 0);
 
-	bool flag_load = (settings["starter_loading"] && current.loading != old.loading && old.loading > 0 && old.loading < 32768);
-	print(current.loading.ToString());
+	bool flag_load = (settings["starter_loading"] && current.loading != old.loading && old.loading > 0 && old.loading < 32768 && current.mission_counter > 0);
 
 	vars.shouldStart = flag_ch1 || flag_load;
 
