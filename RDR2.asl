@@ -15,12 +15,11 @@ state("RDR2", "Steam")
 state("RDR2", "RGL")
 {
 	//probably doesn't work
-	byte mission_counter: 0x3E36B50, 0x38;
-	byte loading: 0x39B5E9C;
-	int save_loading: 0x59FFCF0, 0x1A48;
-	byte checkpoint: 0x59150B0, 0x50;
-	string255 mission: 0x3E251C0;
-	byte in_cutscene: 0x497A448, 0xB208;
+	byte mission_counter: 0x3E0EB30, 0x38;
+	long loading: 0x59D2B14;
+	byte checkpoint: 0x58E8450, 0x50;
+	string255 mission: 0x521C2C0;
+	byte in_cutscene: 0x4952BD8, 0xB208;
 }
 
 startup
