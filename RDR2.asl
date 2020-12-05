@@ -165,9 +165,7 @@ init
 	//print(modules.First().ModuleMemorySize.ToString());
 	switch (modules.First().ModuleMemorySize)
 	{
-		case 122821632:
-		case 122846208:
-		case 122847232:
+		case 116047872:
 			version = "Steam";
 			break;
 		default:
