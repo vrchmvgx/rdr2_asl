@@ -5,21 +5,21 @@ state("RDR2")
 
 state("RDR2", "Steam")
 {
-	byte mission_counter: 0x3E0EB30, 0x38;
-	long loading: 0x59D2B14;
-	byte checkpoint: 0x58E8450, 0x50;
-	string255 mission: 0x521C2C0;
-	byte in_cutscene: 0x4952BD8, 0xB208;
+	byte mission_counter: 0x3E0EFB0, 0x38;
+	long loading: 0x59D38C4;
+	byte checkpoint: 0x58E9220, 0x50;
+	string255 mission: 0x521C7A0;
+	byte in_cutscene: 0x49530A8, 0xB208;
 }
 
 state("RDR2", "RGL")
 {
 	//probably doesn't work
-	byte mission_counter: 0x3E0EB30, 0x38;
-	long loading: 0x59D2B14;
-	byte checkpoint: 0x58E8450, 0x50;
-	string255 mission: 0x521C2C0;
-	byte in_cutscene: 0x4952BD8, 0xB208;
+	byte mission_counter: 0x3E0EFB0, 0x38;
+	long loading: 0x59D38C4;
+	byte checkpoint: 0x58E9220, 0x50;
+	string255 mission: 0x521C7A0;
+	byte in_cutscene: 0x49530A8, 0xB208;
 }
 
 startup
@@ -165,7 +165,7 @@ init
 	//print(modules.First().ModuleMemorySize.ToString());
 	switch (modules.First().ModuleMemorySize)
 	{
-		case 116047872:
+		case 116054016:
 			version = "Steam";
 			break;
 		default:
