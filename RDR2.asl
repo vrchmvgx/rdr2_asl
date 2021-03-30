@@ -12,7 +12,7 @@ state("RDR2", "Steam")
 	byte in_cutscene: 0x49530A8, 0xB208;
 }
 
-state("RDR2", "RGL")
+state("RDR2", "Not Steam")
 {
 	//probably doesn't work
 	byte mission_counter: 0x3E0EFB0, 0x38;
@@ -169,7 +169,7 @@ init
 			version = "Steam";
 			break;
 		default:
-			version = "RGL";
+			version = "Not Steam";
 			break;
 	}
 
