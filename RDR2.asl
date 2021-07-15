@@ -12,14 +12,13 @@ state("RDR2", "Steam")
 	byte in_cutscene: 0x4A43788, 0xB208;
 }
 
-state("RDR2", "Not Steam")
+state("RDR2", "RGL")
 {
-	//probably doesn't work
-	byte mission_counter: 0x3E101B0, 0x38;
-	long loading: 0x59D4FC4;
-	byte checkpoint: 0x58EA920, 0x50;
-	string255 mission: 0x521DCA0;
-	byte in_cutscene: 0x49542B8, 0xB208;
+	byte mission_counter: 0x3EFECE0, 0x38;
+	long loading: 0x5ACB70C;
+	byte checkpoint: 0x59E1070, 0x50;
+	string255 mission: 0x52D6930;
+	byte in_cutscene: 0x4A43788, 0xB208;
 }
 
 startup
