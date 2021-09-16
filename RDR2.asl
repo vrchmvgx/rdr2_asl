@@ -1,25 +1,12 @@
 state("RDR2")
 {
-	//?
-}
-
-state("RDR2", "Steam")
-{
-	byte mission_counter: 0x3EFECE0, 0x38;
-	long loading: 0x5ACB70C;
-	byte checkpoint: 0x59E1070, 0x50;
-	string255 mission: 0x52D6930;
+	byte mission_counter: 0x3F01D60, 0x38;
+	long loading: 0x5ACE7CC;
+	byte checkpoint: 0x59E4130, 0x50;
+	string255 mission: 0x52D9920;
 	byte in_cutscene: 0x4A43788, 0xB208;
 }
 
-state("RDR2", "RGL")
-{
-	byte mission_counter: 0x3EFECE0, 0x38;
-	long loading: 0x5ACB70C;
-	byte checkpoint: 0x59E1070, 0x50;
-	string255 mission: 0x52D6930;
-	byte in_cutscene: 0x4A43788, 0xB208;
-}
 
 startup
 {
@@ -162,23 +149,9 @@ startup
 init
 {
 	//print(modules.First().ModuleMemorySize.ToString());
-	switch (modules.First().ModuleMemorySize)
-	{
-		case 1:
-			version = "Not Steam";
-			break;
-		default:
-			version = "Steam";
-			break;
-	}
 
 	vars.doSplit = false;
 	vars.shouldStart = false;
-}
-
-update
-{
-	if (version == "") return false;
 }
 
 start
