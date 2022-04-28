@@ -1,9 +1,9 @@
 state("RDR2")
 {
-	byte mission_counter: 0x3F01D60, 0x38;
-	long loading: 0x5ACE7CC;
-	byte checkpoint: 0x59E4130, 0x50;
-	string255 mission: 0x52D9920;
+	byte mission_counter: 0x3E713A0, 0x38;
+	long loading: 0x5A3E16C;
+	byte checkpoint: 0x5953AC0, 0x50;
+	string255 mission: 0x5248E30;
 	byte in_cutscene: 0x4A43788, 0xB208;
 }
 
