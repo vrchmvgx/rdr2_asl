@@ -5,6 +5,7 @@ state("RDR2")
 	byte checkpoint: 0x5953AC0, 0x50;
 	string255 mission: 0x5248E30;
 	byte in_cutscene: 0x49B5CF8, 0xB208;
+    string255 cutscene: 0x49B5CF8, 0xB210;
 }
 
 
@@ -127,11 +128,39 @@ startup
 	};
 
 
+    vars.starterCutscenes = new Dictionary<string,string>{
+        {"MUD2_INT", "-Chapter 2"},
+		{"FUD1_", "-Chapter 3"}, //mission name, doesn't have starter cutscene
+		{"MOB1_INT", "-Chapter 4"},
+		{"GUA1_EXT", "-Chapter 5"},
+		{"GNG3_INT", "-Chapter 6"},
+		{"MAR5_INT", "-Epilogue 1"},
+		{"RHLP2_RSC1", "-Epilogue 2"},
+    };
+
+
+	/*vars.finalCutscenes = new Dictionary<string,string>{
+        {"MUD2_INT", "-Chapter 1"},
+        {"MUD2_INT", "-Chapter 2"},
+		{"FUD1_", "-Chapter 3"},
+		{"MOB1_INT", "-Chapter 4"},
+		{"GUA1_EXT", "-Chapter 5"},
+		{"GNG3_INT", "-Chapter 6"},
+		{"MAR5_INT", "-Epilogue 1"},
+    };*/
+
+
 	//Autostarting
 	settings.Add("starters", true, "Auto Starters");
 
 	settings.Add("starter_chapter1", true, "Start the timer after skipping \"Chapter 1\" cutscene", "starters");
-	settings.Add("starter_loading", false, "Start the timer after loading save", "starters");
+    settings.Add("starter_chapters",false, "Chapters", "starters");
+    settings.Add("starter_loading", false, "Start the timer after loading save", "starters");
+
+    // Add starter cutscenes for every chapter
+	foreach (var cs in vars.starterCutscenes) {
+		settings.Add(cs.Key, false, cs.Value, "starter_chapters");
+    }	
 
 
 	//Autosplitting
@@ -156,11 +185,21 @@ init
 
 start
 {
-	bool flag_ch1 = (settings["starter_chapter1"] && current.mission_counter == 0 && current.checkpoint == 2 && old.checkpoint == 1);
+	bool flag_ch1 = (settings["starter_chapter1"] && current.mission_counter == 0 && current.cutscene != old.cutscene && old.cutscene == "WNT1_INT_CABIN");
 
 	bool flag_load = (settings["starter_loading"] && current.loading != old.loading && old.loading > 0 && old.loading < 32768 && current.mission_counter > 0);
 
-	vars.shouldStart = flag_ch1 || flag_load;
+    bool flag_chapters = false;
+    foreach (var cs in vars.starterCutscenes) {
+		if (settings[cs.Key]){
+            if (cs.Key == "FUD1_") flag_chapters = (current.mission != old.mission && current.mission == "FUD1");
+            else flag_chapters = (current.cutscene != old.cutscene && old.cutscene == cs.Key);
+
+            if (flag_chapters) break;
+        }
+    }
+
+	vars.shouldStart = flag_ch1 || flag_chapters || flag_load;
 
 	return vars.shouldStart;
 }
@@ -170,6 +209,8 @@ split
 	bool flag_missions = (old.mission_counter == current.mission_counter - 1 && settings[old.mission]);
 
 	bool flag_anyfinalsplit = (current.mission == "FIN2" && current.checkpoint == 13 && current.in_cutscene != 0 && old.in_cutscene == 0 && settings["any_final_split"]);
+
+	//TimeSpan.Parse(timer.CurrentTime.RealTime.ToString()).TotalMilliseconds
 
 	vars.doSplit = flag_missions || flag_anyfinalsplit;
 
