@@ -5,7 +5,7 @@ state("RDR2")
 	byte checkpoint: 0x5953AC0, 0x50;
 	string255 mission: 0x5248E30;
 	byte in_cutscene: 0x49B5CF8, 0xB208;
-    	string255 cutscene: 0x49B5CF8, 0xB210;
+    string255 cutscene: 0x49B5CF8, 0xB210;
 }
 
 
@@ -130,23 +130,23 @@ startup
 
     vars.starterCutscenes = new Dictionary<string,string>{
         {"RRVRD_RSC_1", "-Chapter 2 (Horseshoe Overlook)"},
-	{"FUD1_", "-Chapter 3 (Clemens Point)"}, //mission name, doesn't have starter cutscene
-	{"MOB1_INT", "-Chapter 4 (Saint Denis)"},
-	{"GUA1_EXT", "-Chapter 5 (Guarma)"},
-	{"GNG3_INT", "-Chapter 6 (Beaver Hollow)"},
-	{"MAR5_INT", "-Epilogue 1 (Pronghorn Ranch)"},
-	{"RHLP2_RSC1", "-Epilogue 2 (Beechers Hope)"},
+		{"FUD1_", "-Chapter 3 (Clemens Point)"}, //mission name, doesn't have starter cutscene
+		{"MOB1_INT", "-Chapter 4 (Saint Denis)"},
+		{"GUA1_EXT", "-Chapter 5 (Guarma)"},
+		{"GNG3_INT", "-Chapter 6 (Beaver Hollow)"},
+		{"MAR5_INT", "-Epilogue 1 (Pronghorn Ranch)"},
+		{"RHLP2_RSC1", "-Epilogue 2 (Beechers Hope)"},
     };
 
 
 	/*vars.finalCutscenes = new Dictionary<string,string>{
         {"MUD2_INT", "-Chapter 1"},
         {"MUD2_INT", "-Chapter 2"},
-	{"FUD1_", "-Chapter 3"},
-	{"MOB1_INT", "-Chapter 4"},
-	{"GUA1_EXT", "-Chapter 5"},
-	{"GNG3_INT", "-Chapter 6"},
-	{"MAR5_INT", "-Epilogue 1"},
+		{"FUD1_", "-Chapter 3"},
+		{"MOB1_INT", "-Chapter 4"},
+		{"GUA1_EXT", "-Chapter 5"},
+		{"GNG3_INT", "-Chapter 6"},
+		{"MAR5_INT", "-Epilogue 1"},
     };*/
 
 
