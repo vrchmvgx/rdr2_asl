@@ -129,24 +129,24 @@ startup
 
 
     vars.starterCutscenes = new Dictionary<string,string>{
-        {"MUD2_INT", "-Chapter 2 (Horseshoe Overlook)"},
-		{"FUD1_", "-Chapter 3 (Clemens Point)"}, //mission name, doesn't have starter cutscene
-		{"MOB1_INT", "-Chapter 4 (Saint Denis)"},
-		{"GUA1_EXT", "-Chapter 5 (Guarma)"},
-		{"GNG3_INT", "-Chapter 6 (Beaver Hollow)"},
-		{"MAR5_INT", "-Epilogue 1 (Pronghorn Ranch)"},
-		{"RHLP2_RSC1", "-Epilogue 2 (Beechers Hope)"},
+        {"RRVRD_RSC_1", "-Chapter 2 (Horseshoe Overlook)"},
+	{"FUD1_", "-Chapter 3 (Clemens Point)"}, //mission name, doesn't have starter cutscene
+	{"MOB1_INT", "-Chapter 4 (Saint Denis)"},
+	{"GUA1_EXT", "-Chapter 5 (Guarma)"},
+	{"GNG3_INT", "-Chapter 6 (Beaver Hollow)"},
+	{"MAR5_INT", "-Epilogue 1 (Pronghorn Ranch)"},
+	{"RHLP2_RSC1", "-Epilogue 2 (Beechers Hope)"},
     };
 
 
 	/*vars.finalCutscenes = new Dictionary<string,string>{
         {"MUD2_INT", "-Chapter 1"},
         {"MUD2_INT", "-Chapter 2"},
-		{"FUD1_", "-Chapter 3"},
-		{"MOB1_INT", "-Chapter 4"},
-		{"GUA1_EXT", "-Chapter 5"},
-		{"GNG3_INT", "-Chapter 6"},
-		{"MAR5_INT", "-Epilogue 1"},
+	{"FUD1_", "-Chapter 3"},
+	{"MOB1_INT", "-Chapter 4"},
+	{"GUA1_EXT", "-Chapter 5"},
+	{"GNG3_INT", "-Chapter 6"},
+	{"MAR5_INT", "-Epilogue 1"},
     };*/
 
 
@@ -192,7 +192,11 @@ start
     bool flag_chapters = false;
     foreach (var cs in vars.starterCutscenes) {
 	if (settings[cs.Key]){
-            if (cs.Key == "FUD1_") flag_chapters = (current.mission != old.mission && current.mission == "FUD1");
+		if (cs.Key == "RRVRD_RSC_1"){
+			flag_chapters = (current.cutscene == "RRVRD_RSC_1" && current.in_cutscene != old.in_cutscene && current.in_cutscene == 0);
+			if (flag_chapters) Thread.Sleep(1250);
+		}
+            else if (cs.Key == "FUD1_") flag_chapters = (current.mission != old.mission && current.mission == "FUD1");
             else flag_chapters = (current.cutscene != old.cutscene && old.cutscene == cs.Key);
 
             if (flag_chapters) break;
