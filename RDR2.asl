@@ -175,9 +175,8 @@ startup
 	settings.Add("any_final_split", true, "Any% final split", "splitters");
 	
 	settings.Add("starter_chapters", false, "Split on the chapters start", "splitters");
-
 	
-}
+}	
 
 init
 {
