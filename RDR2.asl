@@ -219,7 +219,7 @@ split
 	
 	bool flag_chapters = false;
 	
-	if (settings[starter_chapters])
+	if (settings["starter_chapters"])
     foreach (var cs in vars.starterCutscenes) {
 		if (cs.Key == "RRVRD_RSC_1"){
 			flag_chapters = (current.cutscene == "RRVRD_RSC_1" && current.in_cutscene != old.in_cutscene && current.in_cutscene == 0);
