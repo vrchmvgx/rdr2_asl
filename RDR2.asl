@@ -137,16 +137,6 @@ startup
 		{"MAR5_INT", "-Epilogue 1 (Pronghorn Ranch)"},
 		{"RHLP2_RSC1", "-Epilogue 2 (Beechers Hope)"},
     };
-    
-     vars.splitSegments = new Dictionary<string,string>{
-        {"RRVRD_RSC_1-", "-Chapter 2 (Horseshoe Overlook)"},
-		{"FUD1_-", "-Chapter 3 (Clemens Point)"}, //mission name, doesn't have starter cutscene
-		{"MOB1_INT-", "-Chapter 4 (Saint Denis)"},
-		{"GUA1_EXT-", "-Chapter 5 (Guarma)"},
-		{"GNG3_INT-", "-Chapter 6 (Beaver Hollow)"},
-		{"MAR5_INT-", "-Epilogue 1 (Pronghorn Ranch)"},
-		{"RHLP2_RSC1-", "-Epilogue 2 (Beechers Hope)"},
-    };
 
 
 	/*vars.finalCutscenes = new Dictionary<string,string>{
@@ -183,6 +173,11 @@ startup
 	}	
 
 	settings.Add("any_final_split", true, "Any% final split", "splitters");
+	
+	settings.Add("starter_chapters", false, "Split on the chapters start", "splitters");
+
+
+    }	
 }
 
 init
@@ -200,7 +195,7 @@ start
 	bool flag_load = (settings["starter_loading"] && current.loading != old.loading && old.loading > 0 && old.loading < 32768 && current.mission_counter > 0);
 
     bool flag_chapters = false;
-    foreach (var cs in vars.splitSegments) {
+    foreach (var cs in vars.starterCutscenes) {
 	if (settings[cs.Key]){
 		if (cs.Key == "RRVRD_RSC_1"){
 			flag_chapters = (current.cutscene == "RRVRD_RSC_1" && current.in_cutscene != old.in_cutscene && current.in_cutscene == 0);
@@ -225,18 +220,18 @@ split
 	bool flag_anyfinalsplit = (current.mission == "FIN2" && current.checkpoint == 13 && current.in_cutscene != 0 && old.in_cutscene == 0 && settings["any_final_split"]);
 	
 	bool flag_chapters = false;
+	
+	if (settings[starter_chapters])
     foreach (var cs in vars.starterCutscenes) {
-	if (settings[cs.Key]){
-		if (cs.Key == "RRVRD_RSC_1-"){
+		if (cs.Key == "RRVRD_RSC_1"){
 			flag_chapters = (current.cutscene == "RRVRD_RSC_1" && current.in_cutscene != old.in_cutscene && current.in_cutscene == 0);
 			if (flag_chapters) Thread.Sleep(1250);
 		}
-            else if (cs.Key == "FUD1_-") flag_chapters = (current.mission != old.mission && current.mission == "FUD1");
-            else flag_chapters = (current.cutscene != old.cutscene && old.cutscene == cs.Key.Substring(0, cs.Key.Length-1));
+            else if (cs.Key == "FUD1_") flag_chapters = (current.mission != old.mission && current.mission == "FUD1");
+            else flag_chapters = (current.cutscene != old.cutscene && old.cutscene == cs.Key;
 
             if (flag_chapters) break;
         }
-    }
 	
 	//TimeSpan.Parse(timer.CurrentTime.RealTime.ToString()).TotalMilliseconds
 
