@@ -174,7 +174,7 @@ startup
 
 	settings.Add("any_final_split", true, "Any% final split", "splitters");
 	
-	settings.Add("starter_chapters", false, "Split on the chapters start", "splitters");
+	settings.Add("splitter_chapters", false, "Split on the chapters start", "splitters");
 	
 }	
 
@@ -219,7 +219,7 @@ split
 	
 	bool flag_chapters = false;
 	
-	if (settings["starter_chapters"])
+	if (settings["splitter_chapters"])
     foreach (var cs in vars.starterCutscenes) {
 		if (cs.Key == "RRVRD_RSC_1"){
 			flag_chapters = (current.cutscene == "RRVRD_RSC_1" && current.in_cutscene != old.in_cutscene && current.in_cutscene == 0);
