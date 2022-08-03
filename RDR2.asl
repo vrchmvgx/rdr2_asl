@@ -176,8 +176,7 @@ startup
 	
 	settings.Add("starter_chapters", false, "Split on the chapters start", "splitters");
 
-
-    }	
+	
 }
 
 init
