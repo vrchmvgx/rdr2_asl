@@ -226,7 +226,7 @@ split
 			if (flag_chapters) Thread.Sleep(1250);
 		}
             else if (cs.Key == "FUD1_") flag_chapters = (current.mission != old.mission && current.mission == "FUD1");
-            else flag_chapters = (current.cutscene != old.cutscene && old.cutscene == cs.Key);
+            else flag_chapters = current.cutscene != old.cutscene && old.cutscene == cs.Key;
 
             if (flag_chapters) break;
         }
