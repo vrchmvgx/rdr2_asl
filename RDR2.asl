@@ -192,19 +192,22 @@ start
 
 	bool flag_load = (settings["starter_loading"] && current.loading != old.loading && old.loading > 0 && old.loading < 32768 && current.mission_counter > 0);
 
-    bool flag_chapters = false;
-    foreach (var cs in vars.starterCutscenes) {
-	if (settings[cs.Key]){
-		if (cs.Key == "RRVRD_RSC_1"){
-			flag_chapters = (current.cutscene == "RRVRD_RSC_1" && current.in_cutscene != old.in_cutscene && current.in_cutscene == 0);
-			if (flag_chapters) Thread.Sleep(1250);
-		}
-            else if (cs.Key == "FUD1_") flag_chapters = (current.mission != old.mission && current.mission == "FUD1");
-            else flag_chapters = (current.cutscene != old.cutscene && old.cutscene == cs.Key);
+    	bool flag_chapters = false;
+    	
+	if (settings[old.cutscene]) // Generic starter
+		if (current.cutscene != old.cutscene)
+			flag_chapters = true;
 
-            if (flag_chapters) break;
-        }
-    }
+	if (settings[RRVRD_RSC_1]) // Chapter 2 exception
+		if (current.cutscene == "RRVRD_RSC_1" && old.in_cutscene != 0 && current.in_cutscene == 0){
+			await Task.Delay(1250);
+    		flag_chapters = true;
+		}
+
+	if (settings[FUD1_]) // Chapter 3 exception
+		if (current.mission != old.mission && current.mission == "FUD1")
+			flag_chapters = true;
+
 
 	vars.shouldStart = flag_ch1 || flag_chapters || flag_load;
 
@@ -219,17 +222,18 @@ split
 	
 	bool flag_chapters = false;
 	
-	if (settings["splitter_chapters"])
-    foreach (var cs in vars.starterCutscenes) {
-		if (cs.Key == "RRVRD_RSC_1"){
-			flag_chapters = (current.cutscene == "RRVRD_RSC_1" && current.in_cutscene != old.in_cutscene && current.in_cutscene == 0);
-			if (flag_chapters) Thread.Sleep(1250);
-		}
-            else if (cs.Key == "FUD1_") flag_chapters = (current.mission != old.mission && current.mission == "FUD1");
-            else flag_chapters = current.cutscene != old.cutscene && old.cutscene == cs.Key;
+	if (settings[splitter_chapters]){
+		if (current.cutscene != old.cutscene && settings[old.cutscene]) // Generic starter
+			flag_chapters = true;
 
-            if (flag_chapters) break;
-        }
+		if (current.cutscene == "RRVRD_RSC_1" && old.in_cutscene != 0 && current.in_cutscene == 0){ // Chapter 2 exception
+			await Task.Delay(1250);
+    			flag_chapters = true;
+		}
+
+		if (current.mission != old.mission && current.mission == "FUD1") // Chapter 3 exception
+			flag_chapters = true;
+	}
 	
 	//TimeSpan.Parse(timer.CurrentTime.RealTime.ToString()).TotalMilliseconds
 
