@@ -130,23 +130,23 @@ startup
 
     vars.starterCutscenes = new Dictionary<string,string>{
         {"RRVRD_RSC_1", "-Chapter 2 (Horseshoe Overlook)"},
-		{"FUD1_", "-Chapter 3 (Clemens Point)"}, //mission name, doesn't have starter cutscene
-		{"MOB1_INT", "-Chapter 4 (Saint Denis)"},
-		{"GUA1_EXT", "-Chapter 5 (Guarma)"},
-		{"GNG3_INT", "-Chapter 6 (Beaver Hollow)"},
-		{"MAR5_INT", "-Epilogue 1 (Pronghorn Ranch)"},
-		{"RHLP2_RSC1", "-Epilogue 2 (Beechers Hope)"},
+	{"FUD1_", "-Chapter 3 (Clemens Point)"}, //mission name, doesn't have starter cutscene
+	{"MOB1_INT", "-Chapter 4 (Saint Denis)"},
+	{"GUA1_EXT", "-Chapter 5 (Guarma)"},
+	{"GNG3_INT", "-Chapter 6 (Beaver Hollow)"},
+	{"MAR5_INT", "-Epilogue 1 (Pronghorn Ranch)"},
+	{"RHLP2_RSC1", "-Epilogue 2 (Beechers Hope)"},
     };
 
 
 	/*vars.finalCutscenes = new Dictionary<string,string>{
         {"MUD2_INT", "-Chapter 1"},
         {"MUD2_INT", "-Chapter 2"},
-		{"FUD1_", "-Chapter 3"},
-		{"MOB1_INT", "-Chapter 4"},
-		{"GUA1_EXT", "-Chapter 5"},
-		{"GNG3_INT", "-Chapter 6"},
-		{"MAR5_INT", "-Epilogue 1"},
+	{"FUD1_", "-Chapter 3"},
+	{"MOB1_INT", "-Chapter 4"},
+	{"GUA1_EXT", "-Chapter 5"},
+	{"GNG3_INT", "-Chapter 6"},
+	{"MAR5_INT", "-Epilogue 1"},
     };*/
 
 
@@ -154,10 +154,10 @@ startup
 	settings.Add("starters", true, "Auto Starters");
 
 	settings.Add("starter_chapter1", true, "Start the timer after skipping \"Chapter 1\" cutscene", "starters");
-    settings.Add("starter_chapters",false, "Chapters", "starters");
-    settings.Add("starter_loading", false, "Start the timer after loading save", "starters");
+    	settings.Add("starter_chapters",false, "Chapters", "starters");
+    	settings.Add("starter_loading", false, "Start the timer after loading save", "starters");
 
-    // Add starter cutscenes for every chapter
+   	// Add starter cutscenes for every chapter
 	foreach (var cs in vars.starterCutscenes) {
 		settings.Add(cs.Key, false, cs.Value, "starter_chapters");
     }	
@@ -192,7 +192,7 @@ start
 
 	bool flag_load = (settings["starter_loading"] && current.loading != old.loading && old.loading > 0 && old.loading < 32768 && current.mission_counter > 0);
 
-    bool flag_chapters = false;
+    	bool flag_chapters = false;
     	
 	if (settings[old.cutscene]) // Generic starter
 		if (current.cutscene != old.cutscene)
