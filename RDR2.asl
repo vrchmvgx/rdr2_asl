@@ -198,13 +198,13 @@ start
 		if (current.cutscene != old.cutscene)
 			flag_chapters = true;
 
-	if (settings[RRVRD_RSC_1]) // Chapter 2 exception
+	if (settings["RRVRD_RSC_1"]) // Chapter 2 exception
 		if (current.cutscene == "RRVRD_RSC_1" && old.in_cutscene != 0 && current.in_cutscene == 0){
 			await Task.Delay(1250);
     		flag_chapters = true;
 		}
 
-	if (settings[FUD1_]) // Chapter 3 exception
+	if (settings["FUD1_"]) // Chapter 3 exception
 		if (current.mission != old.mission && current.mission == "FUD1")
 			flag_chapters = true;
 
