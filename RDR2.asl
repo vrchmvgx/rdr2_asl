@@ -5,7 +5,7 @@ state("RDR2")
 	byte checkpoint: 0x598FE80, 0x50;
 	string255 mission: 0x526B170;
 	byte in_cutscene: 0x49D7FF8, 0xB208;
-    string255 cutscene: 0x49D7FF8, 0xB210;
+    	string255 cutscene: 0x49D7FF8, 0xB210;
 }
 
 
@@ -192,7 +192,7 @@ start
 
 	bool flag_load = (settings["starter_loading"] && current.loading != old.loading && old.loading > 0 && old.loading < 32768 && current.mission_counter > 0);
 
-    	bool flag_chapters = false;
+    bool flag_chapters = false;
     	
 	if (settings[old.cutscene]) // Generic starter
 		if (current.cutscene != old.cutscene)
@@ -200,7 +200,7 @@ start
 
 	if (settings["RRVRD_RSC_1"]) // Chapter 2 exception
 		if (current.cutscene == "RRVRD_RSC_1" && old.in_cutscene != 0 && current.in_cutscene == 0){
-			await Task.Delay(1250);
+			System.Threading.Tasks.Task.Delay(1250).Wait();
     		flag_chapters = true;
 		}
 
@@ -222,12 +222,12 @@ split
 	
 	bool flag_chapters = false;
 	
-	if (settings[splitter_chapters]){
+	if (settings["splitter_chapters"]){
 		if (current.cutscene != old.cutscene && settings[old.cutscene]) // Generic starter
 			flag_chapters = true;
-
-		if (current.cutscene == "RRVRD_RSC_1" && old.in_cutscene != 0 && current.in_cutscene == 0){ // Chapter 2 exception
-			await Task.Delay(1250);
+		
+	if (current.cutscene == "RRVRD_RSC_1" && old.in_cutscene != 0 && current.in_cutscene == 0){ // Chapter 2 exception
+			System.Threading.Tasks.Task.Delay(1250).Wait();
     			flag_chapters = true;
 		}
 
