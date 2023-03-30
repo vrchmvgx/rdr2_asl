@@ -223,16 +223,11 @@ split
 	bool flag_chapters = false;
 	
 	if (settings["splitter_chapters"]){
-		if (current.cutscene != old.cutscene && settings[old.cutscene]) // Generic starter
+		if (current.cutscene != old.cutscene && (settings.ContainsKey(old.cutscene) || old.cutscene == "MUD3_INT")) // Generic split with chapter 2
 			flag_chapters = true;
-		
-	if (current.cutscene == "RRVRD_RSC_1" && old.in_cutscene != 0 && current.in_cutscene == 0){ // Chapter 2 exception
-			System.Threading.Tasks.Task.Delay(1250).Wait();
-    			flag_chapters = true;
-		}
 
-		if (current.mission != old.mission && current.mission == "FUD1") // Chapter 3 exception
-			flag_chapters = true;
+	if (current.mission != old.mission && current.mission == "FUD1") // Chapter 3 exception
+		flag_chapters = true;
 	}
 	
 	//TimeSpan.Parse(timer.CurrentTime.RealTime.ToString()).TotalMilliseconds
