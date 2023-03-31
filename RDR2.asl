@@ -139,15 +139,15 @@ startup
     };
 
 
-	/*vars.finalCutscenes = new Dictionary<string,string>{
-        {"MUD2_INT", "-Chapter 1"},
-        {"MUD2_INT", "-Chapter 2"},
-	{"FUD1_", "-Chapter 3"},
-	{"MOB1_INT", "-Chapter 4"},
-	{"GUA1_EXT", "-Chapter 5"},
-	{"GNG3_INT", "-Chapter 6"},
-	{"MAR5_INT", "-Epilogue 1"},
-    };*/
+    vars.finalCutscenes = new Dictionary<string,string>{
+        {"MUD1_MCS5", "-Chapter 1"},
+        {"RDTC1_RSC6", "-Chapter 2"},
+	{"RDTC2_RSC4", "-Chapter 3"},
+	{"NBD1_EXT", "-Chapter 4"},
+	{"RDTC3_RSC5B", "-Chapter 5"},
+	//{"FIN1_EXT", "-Chapter 6"},
+	{"RBCH1_RSC6", "-Epilogue 1"},
+    };
 
 
 	//Autostarting
@@ -174,8 +174,8 @@ startup
 
 	settings.Add("any_final_split", true, "Any% final split", "splitters");
 	
-	settings.Add("splitter_chapters", false, "Split on the chapters start", "splitters");
-	
+	settings.Add("splitter_chapters_start", false, "Split at the start of each chapter", "splitters");
+	settings.Add("splitter_chapters_end", false, "Split at the end of each chapter", "splitters");	
 }	
 
 init
@@ -194,13 +194,13 @@ start
 
     	bool flag_chapters = false;
     	
-	if (settings[old.cutscene]) // Generic starter
+	if (settings[old.cutscene] && vars.starterCutscenes.ContainsKey(old.cutscene)) // Generic starter
 		if (current.cutscene != old.cutscene)
 			flag_chapters = true;
 
 	if (settings["RRVRD_RSC_1"]) // Chapter 2 exception
 		if (current.cutscene == "RRVRD_RSC_1" && old.in_cutscene != 0 && current.in_cutscene == 0){
-			System.Threading.Tasks.Task.Delay(1250).Wait();
+			System.Threading.Tasks.Task.Delay(1250).Wait(); //retarded
     		flag_chapters = true;
 		}
 
@@ -222,15 +222,20 @@ split
 	
 	bool flag_chapters = false;
 	
-	if (settings["splitter_chapters"]){
-		if (current.cutscene != old.cutscene && (settings.ContainsKey(old.cutscene) || old.cutscene == "MUD3_INT")) // Generic split with chapter 2
+	// Chapter start
+	if (settings["splitter_chapters_start"]){
+		if (current.cutscene != old.cutscene && (vars.starterCutscenes.ContainsKey(old.cutscene) || old.cutscene == "MUD3_INT")) // Generic split
 			flag_chapters = true;
 
 	if (current.mission != old.mission && current.mission == "FUD1") // Chapter 3 exception
 		flag_chapters = true;
 	}
 	
-	//TimeSpan.Parse(timer.CurrentTime.RealTime.ToString()).TotalMilliseconds
+	// Chapter end
+	if (settings["splitter_chapters_end"]){
+		if (current.cutscene != old.cutscene && (vars.finalCutscenes.ContainsKey(old.cutscene) ^ current.cutscene == "FIN1_EXT")) // Generic split with ch6 exception
+			flag_chapters = true;
+	}
 
 	vars.doSplit = flag_missions || flag_anyfinalsplit || flag_chapters;
 
