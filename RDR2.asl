@@ -259,7 +259,7 @@ split
 			if (settings[current.cutscene] && vars.finalCutscenes.ContainsKey(current.cutscene)) { // Generic split
 				int sleep_delay = 0;
 
-				switch (current.cutscene){
+				switch (current.cutscene.ToString()){
 				case "MUD1_MCS5":
 					sleep_delay = 4417;
 				break;
