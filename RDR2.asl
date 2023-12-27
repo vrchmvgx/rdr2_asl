@@ -129,7 +129,8 @@ startup
 
 
     vars.starterCutscenes = new Dictionary<string,string>{
-        {"RRVRD_RSC_1", "-Chapter 2 (Horseshoe Overlook)"},
+        {"RRVRD_", "-Chapter 2 (Horseshoe Overlook), Swanson mission"}, //not full cutscene name to avoid double split
+        {"MUD3_INT", "-Chapter 2 (Horseshoe Overlook), Uncle mission"},
 	{"FUD1_", "-Chapter 3 (Clemens Point)"}, //mission name, doesn't have starter cutscene
 	{"MOB1_INT", "-Chapter 4 (Saint Denis)"},
 	{"GUA1_EXT", "-Chapter 5 (Guarma)"},
@@ -145,7 +146,7 @@ startup
 	{"RDTC2_RSC4", "-Chapter 3"},
 	{"NBD1_EXT", "-Chapter 4"},
 	{"RDTC3_RSC5B", "-Chapter 5"},
-	//{"FIN1_EXT", "-Chapter 6"},
+	{"FIN1_", "-Chapter 6"}, //changed
 	{"RBCH1_RSC6", "-Epilogue 1"},
     };
 
@@ -176,6 +177,16 @@ startup
 	
 	settings.Add("splitter_chapters_start", false, "Split at the start of each chapter", "splitters");
 	settings.Add("splitter_chapters_end", false, "Split at the end of each chapter", "splitters");	
+
+	// Add starter cutscenes for every chapter
+	foreach (var cs in vars.starterCutscenes) {
+		settings.Add("SPLIT_" + cs.Key, true, cs.Value, "splitter_chapters_start");
+    }	
+
+	// Add ending cutscenes for every chapter
+	foreach (var cs in vars.finalCutscenes) {
+		settings.Add(cs.Key, true, cs.Value, "splitter_chapters_end");
+    }	
 }	
 
 init
@@ -198,7 +209,7 @@ start
 		if (current.cutscene != old.cutscene)
 			flag_chapters = true;
 
-	if (settings["RRVRD_RSC_1"]) // Chapter 2 exception
+	if (settings["RRVRD_"]) // Chapter 2 exception
 		if (current.cutscene == "RRVRD_RSC_1" && old.in_cutscene != 0 && current.in_cutscene == 0){
 			System.Threading.Tasks.Task.Delay(1250).Wait(); //retarded
     		flag_chapters = true;
@@ -224,17 +235,32 @@ split
 	
 	// Chapter start
 	if (settings["splitter_chapters_start"]){
-		if (current.cutscene != old.cutscene && (vars.starterCutscenes.ContainsKey(old.cutscene) || old.cutscene == "MUD3_INT")) // Generic split
-			flag_chapters = true;
+		if (settings["SPLIT_" + old.cutscene] && vars.starterCutscenes.ContainsKey(old.cutscene)) // Generic starter
+			if (current.cutscene != old.cutscene)
+				flag_chapters = true;
 
-	if (current.mission != old.mission && current.mission == "FUD1") // Chapter 3 exception
-		flag_chapters = true;
+	if (settings["SPLIT_RRVRD_"]) // Chapter 2 Swanson exception
+		if (current.cutscene == "RRVRD_RSC_1" && old.in_cutscene != 0 && current.in_cutscene == 0){
+			System.Threading.Tasks.Task.Delay(1250).Wait(); //retarded
+    			flag_chapters = true;
+		}
+
+	if (settings["SPLIT_FUD1_"]) // Chapter 3 exception
+		if (current.mission != old.mission && current.mission == "FUD1")
+			flag_chapters = true;
 	}
 	
 	// Chapter end
 	if (settings["splitter_chapters_end"]){
-		if (current.cutscene != old.cutscene && (vars.finalCutscenes.ContainsKey(old.cutscene) ^ current.cutscene == "FIN1_EXT")) // Generic split with ch6 exception
-			flag_chapters = true;
+		//if (current.cutscene != old.cutscene && (vars.finalCutscenes.ContainsKey(old.cutscene) ^ current.cutscene == "FIN1_EXT")) // Generic split with ch6 exception
+		//	flag_chapters = true;
+
+		if (current.cutscene != old.cutscene)
+			if ((settings[old.cutscene] && vars.finalCutscenes.ContainsKey(old.cutscene)) || // Generic split
+			(settings["FIN1_"] && current.cutscene == "FIN1_EXT")) // Chapter 6 exception
+				flag_chapters = true;
+
+		
 	}
 
 	vars.doSplit = flag_missions || flag_anyfinalsplit || flag_chapters;
