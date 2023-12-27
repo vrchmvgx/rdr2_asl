@@ -255,10 +255,33 @@ split
 		//if (current.cutscene != old.cutscene && (vars.finalCutscenes.ContainsKey(old.cutscene) ^ current.cutscene == "FIN1_EXT")) // Generic split with ch6 exception
 		//	flag_chapters = true;
 
-		if (current.cutscene != old.cutscene)
-			if ((settings[old.cutscene] && vars.finalCutscenes.ContainsKey(old.cutscene)) || // Generic split
-			(settings["FIN1_"] && current.cutscene == "FIN1_EXT")) // Chapter 6 exception
-				flag_chapters = true;
+		if (current.in_cutscene + old.in_cutscene == old.in_cutscene)
+			if (settings[current.cutscene] && vars.finalCutscenes.ContainsKey(current.cutscene)) { // Generic split
+				int sleep_delay = 0;
+
+				switch (current.cutscene){
+				case "MUD1_MCS5":
+					sleep_delay = 4417;
+				break;
+				case "RDTC1_RSC6":
+					sleep_delay = 8100;
+				break;
+				case "RDTC2_RSC4":
+					sleep_delay = 18733;
+				break;
+				case "RDTC3_RSC5B":
+					sleep_delay = 11133;
+				break;
+				case "RBCH1_RSC6":
+					sleep_delay = 14600;
+				break;
+				}
+
+			System.Threading.Tasks.Task.Delay(sleep_delay).Wait(); // ISleep
+			flag_chapters = true;
+			}
+		else if (settings["FIN1_"] && current.cutscene == "FIN1_EXT" && old.cutscene == "") // Chapter 6 exception
+			flag_chapters = true;
 
 		
 	}
