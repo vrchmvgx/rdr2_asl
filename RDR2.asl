@@ -258,24 +258,17 @@ split
 		if (current.in_cutscene + old.in_cutscene == old.in_cutscene)
 			if (settings[current.cutscene] && vars.finalCutscenes.ContainsKey(current.cutscene)) { // Generic split
 				int sleep_delay = 0;
-				string scene = current.cutscene;
-				switch (scene){
-				case "MUD1_MCS5":
+
+				if (current.cutscene == "MUD1_MCS5")
 					sleep_delay = 4417;
-				break;
-				case "RDTC1_RSC6":
+				else if (current.cutscene == "RDTC1_RSC6")
 					sleep_delay = 8100;
-				break;
-				case "RDTC2_RSC4":
+				else if (current.cutscene == "RDTC2_RSC4")
 					sleep_delay = 18733;
-				break;
-				case "RDTC3_RSC5B":
+				else if (current.cutscene == "RDTC3_RSC5B")
 					sleep_delay = 11133;
-				break;
-				case "RBCH1_RSC6":
+				else if (current.cutscene == "RBCH1_RSC6")
 					sleep_delay = 14600;
-				break;
-				}
 
 			System.Threading.Tasks.Task.Delay(sleep_delay).Wait(); // ISleep
 			flag_chapters = true;
