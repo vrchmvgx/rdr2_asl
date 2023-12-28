@@ -144,7 +144,7 @@ startup
         {"MUD1_MCS5", "-Chapter 1"},
         {"RDTC1_RSC6", "-Chapter 2"},
 	{"RDTC2_RSC4", "-Chapter 3"},
-	{"NBD1_EXT", "-Chapter 4"},
+	{"NBD1_", "-Chapter 4"},
 	{"RDTC3_RSC5B", "-Chapter 5"},
 	{"FIN1_", "-Chapter 6"}, //changed
 	{"RBCH1_RSC6", "-Epilogue 1"},
@@ -195,6 +195,9 @@ init
 
 	vars.doSplit = false;
 	vars.shouldStart = false;
+
+	vars.timeSpanSplit = new TimeSpan(); // for delayed split
+	vars.cutsceneSkipCounter = 0; // to prevent double split at the start/end of each chapter
 }
 
 start
@@ -204,7 +207,9 @@ start
 	bool flag_load = (settings["starter_loading"] && current.loading != old.loading && old.loading > 0 && old.loading < 32768 && current.mission_counter > 0);
 
     	bool flag_chapters = false;
-    	
+
+    	//print("T" + timer.CurrentTime.RealTime.ToString() + "------------------" + vars.timeSpanSplit.Ticks.ToString());
+
 	if (settings[old.cutscene] && vars.starterCutscenes.ContainsKey(old.cutscene)) // Generic starter
 		if (current.cutscene != old.cutscene)
 			flag_chapters = true;
@@ -233,21 +238,30 @@ split
 	
 	bool flag_chapters = false;
 	
+	//print("T" + timer.CurrentTime.RealTime.ToString() + "------------------" + vars.timeSpanSplit.ToString());
+
 	// Chapter start
 	if (settings["splitter_chapters_start"]){
 		if (settings["SPLIT_" + old.cutscene] && vars.starterCutscenes.ContainsKey(old.cutscene)) // Generic starter
 			if (current.cutscene != old.cutscene)
 				flag_chapters = true;
 
-	if (settings["SPLIT_RRVRD_"]) // Chapter 2 Swanson exception
-		if (current.cutscene == "RRVRD_RSC_1" && old.in_cutscene != 0 && current.in_cutscene == 0){
-			System.Threading.Tasks.Task.Delay(1250).Wait(); //retarded
-    			flag_chapters = true;
+		if (settings["SPLIT_RRVRD_"]){ // Chapter 2 Swanson exception
+			if (current.cutscene == "RRVRD_RSC_1" && old.in_cutscene != 0 && current.in_cutscene == 0 && vars.timeSpanSplit.Ticks == 0){
+				if (++(vars.cutsceneSkipCounter) == 1)
+					vars.timeSpanSplit = timer.CurrentTime.RealTime + new TimeSpan(0, 0, 0, 0, 1250);
+			}
+			else if	(vars.timeSpanSplit.Ticks != 0 && timer.CurrentTime.RealTime >= vars.timeSpanSplit){ // Delayed split
+				vars.timeSpanSplit = new TimeSpan();
+				flag_chapters = true;
+			}
+			else if (old.cutscene == "RRVRD_RSC_1" && current.cutscene == "") // Reset cutsceneSkipCounter when the cutscene ends
+				vars.cutsceneSkipCounter = 0;
 		}
 
-	if (settings["SPLIT_FUD1_"]) // Chapter 3 exception
-		if (current.mission != old.mission && current.mission == "FUD1")
-			flag_chapters = true;
+		if (settings["SPLIT_FUD1_"]) // Chapter 3 exception
+			if (current.mission != old.mission && current.mission == "FUD1")
+				flag_chapters = true;
 	}
 	
 	// Chapter end
@@ -256,28 +270,43 @@ split
 		//	flag_chapters = true;
 
 		if (current.in_cutscene + old.in_cutscene == old.in_cutscene)
-			if (settings[current.cutscene] && vars.finalCutscenes.ContainsKey(current.cutscene)) { // Generic split
-				int sleep_delay = 0;
+			if (settings[current.cutscene] && vars.finalCutscenes.ContainsKey(current.cutscene) && vars.timeSpanSplit.Ticks == 0) { // Generic split
+				int sleep_delay = 0, requiredCsSkips = 0;
 
-				if (current.cutscene == "MUD1_MCS5")
+				if (current.cutscene == "MUD1_MCS5"){
+					requiredCsSkips = 1;
 					sleep_delay = 4417;
-				else if (current.cutscene == "RDTC1_RSC6")
+				}
+				else if (current.cutscene == "RDTC1_RSC6"){
+					requiredCsSkips = 2;
 					sleep_delay = 8100;
-				else if (current.cutscene == "RDTC2_RSC4")
+				}
+				else if (current.cutscene == "RDTC2_RSC4"){ // idk about last 3
+					requiredCsSkips = 1;
 					sleep_delay = 18733;
-				else if (current.cutscene == "RDTC3_RSC5B")
+				}
+				else if (current.cutscene == "RDTC3_RSC5B"){
+					requiredCsSkips = 1;
 					sleep_delay = 11133;
-				else if (current.cutscene == "RBCH1_RSC6")
+				}
+				else if (current.cutscene == "RBCH1_RSC6"){
+					requiredCsSkips = 1;
 					sleep_delay = 14600;
+				}
 
-			System.Threading.Tasks.Task.Delay(sleep_delay).Wait(); // ISleep
-			flag_chapters = true;
+				if (++(vars.cutsceneSkipCounter) == requiredCsSkips) //set the delay only if the cutscene was skipped certain amount of times, used to prevent double split
+					vars.timeSpanSplit = timer.CurrentTime.RealTime + new TimeSpan(0, 0, 0, 0, sleep_delay);
 			}
-		else if (settings["FIN1_"] && current.cutscene == "FIN1_EXT" && old.cutscene == "") // Chapter 6 exception
-			flag_chapters = true;
-
-		
+		else if ((settings["NBD1_"] && current.cutscene != old.cutscene && old.cutscene == "NBD1_EXT") || // Chapter 4 exception
+			(settings["FIN1_"] && current.cutscene == "FIN1_EXT" && old.cutscene == "")) // Chapter 6 exception
+				flag_chapters = true;
+		else if	(vars.timeSpanSplit.Ticks != 0 && timer.CurrentTime.RealTime >= vars.timeSpanSplit) // Delayed split for chapter finish
+				flag_chapters = true;
+			
+		if (current.cutscene != old.cutscene && vars.finalCutscenes.ContainsKey(old.cutscene)) // Reset cutsceneSkipCounter when the cutscene ends
+			vars.cutsceneSkipCounter = 0;
 	}
+
 
 	vars.doSplit = flag_missions || flag_anyfinalsplit || flag_chapters;
 
