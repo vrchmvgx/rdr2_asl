@@ -270,31 +270,26 @@ split
 		//	flag_chapters = true;
 
 		if (current.in_cutscene + old.in_cutscene == old.in_cutscene)
-			if (settings[current.cutscene] && vars.finalCutscenes.ContainsKey(current.cutscene) && vars.timeSpanSplit.Ticks == 0) { // Generic split
-				int sleep_delay = 0, requiredCsSkips = 0;
+			if (settings[current.cutscene] && vars.finalCutscenes.ContainsKey(current.cutscene) && current.cutscene == old.cutscene && vars.timeSpanSplit.Ticks == 0) { // Generic split
+				int sleep_delay = 0;
 
 				if (current.cutscene == "MUD1_MCS5"){
-					requiredCsSkips = 1;
 					sleep_delay = 4417;
 				}
 				else if (current.cutscene == "RDTC1_RSC6"){
-					requiredCsSkips = 2;
 					sleep_delay = 8100;
 				}
 				else if (current.cutscene == "RDTC2_RSC4"){ // idk about last 3
-					requiredCsSkips = 1;
 					sleep_delay = 18733;
 				}
 				else if (current.cutscene == "RDTC3_RSC5B"){
-					requiredCsSkips = 1;
 					sleep_delay = 11133;
 				}
 				else if (current.cutscene == "RBCH1_RSC6"){
-					requiredCsSkips = 1;
 					sleep_delay = 14600;
 				}
 
-				if (++(vars.cutsceneSkipCounter) == requiredCsSkips) //set the delay only if the cutscene was skipped certain amount of times, used to prevent double split
+				if (++(vars.cutsceneSkipCounter) == 1) //set the delay only if the cutscene was skipped certain amount of times, used to prevent double split
 					vars.timeSpanSplit = timer.CurrentTime.RealTime + new TimeSpan(0, 0, 0, 0, sleep_delay);
 			}
 		else if ((settings["NBD1_"] && current.cutscene != old.cutscene && old.cutscene == "NBD1_EXT") || // Chapter 4 exception
