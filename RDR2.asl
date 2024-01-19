@@ -280,7 +280,7 @@ split
 					sleep_delay = 8100;
 				}
 				else if (current.cutscene == "RDTC2_RSC4"){ // idk about last 3
-					sleep_delay = 18733;
+					sleep_delay = 17733;
 				}
 				else if (current.cutscene == "RDTC3_RSC5B"){
 					sleep_delay = 11133;
