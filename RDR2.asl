@@ -127,6 +127,92 @@ startup
 		
 	};
 
+	vars.strangerScripts = new Dictionary<string,string> {
+
+		// Side missions
+		{"RCRLE", "No Good Deed"},
+		{"RSKLR", "American Dreams"},
+		{"RSLVC2", "The Iniquities Of History II"},
+		{"RKTTY1", "He's British Of Course I"},
+		{"RKTTY2", "He's British Of Course II"},
+		{"RKTTY3", "He's British Of Course III"},
+		{"RKTTY4", "He's British Of Course IV"},
+		{"RKTTY5", "He's British Of Course V"},
+		{"RWARV2", "The Veteran II"},
+		{"RWARV3", "The Veteran III"},
+		{"RWARV4", "The Veteran IV"},
+		{"RHNTN1", "The Wisdom Of Elders"},
+		{"RHNTN2", "The Wisdom Of Elders II"},
+		{"RHNTN4", "The Wisdom Of Elders IV"},
+		{"RHNTN5", "The Wisdom Of Elders V"},
+		{"RBWCG4", "The Ties That Bind Us III"},
+		{"RBWCG6", "The Ties That Bind Us IV"},
+		{"RBWCG7", "The Ties That Bind Us V"},
+		{"RCKPT1", "A Bright Bouncing Boy I"},
+		{"RCKPT2", "A Bright Bouncing Boy II"},
+		{"RFMA1", "The Artist's Way I"},
+		{"RFMA2", "The Artist's Way II"},
+		{"RFMA3", "The Artist's Way III"},
+		{"RFMA4", "The Artist's Way IV"},
+		{"ROBT1", "Oh Brother I"},
+		{"ROBT2", "Oh Brother II"},
+		{"ROBT3", "Oh Brother III"},
+		{"RMAYR1", "Idealism And Pragmatism For Beginners I"},
+		{"RMAYR2", "Idealism And Pragmatism For Beginners II"},
+		{"RMAYR3", "Idealism And Pragmatism For Beginners III"},
+		{"RMASN1", "Arcadia For Amateurs I"},
+		{"RMASN2", "Arcadia For Amateurs II"},
+		{"RMASN3", "Arcadia for Amateurs III"},
+		{"RMASN4", "Arcadia for Amateurs IV"},
+		{"RMASN5", "Arcadia for Amateurs V"},
+		{"RODDF1", "The Smell Of Grease Paint I"},
+		{"RODDF2", "The Smell Of Grease Paint II"},
+		{"RCCIG", "Smoking And Other Hobbies"},
+		{"RETH", "All That Glitters"},
+		{"RCDIN1", "A Test Of Faith I"},
+		{"RCRKF1", "Geology For Beginners I"},
+		{"RCEXO1", "Duchesses And Other Animals I"},
+		{"REDW21", "Do Not Seek Absolution I"},
+		{"RBNP20", "Letter From Penelope"},
+		{"RSTR31", "Money Lending And Other Sins VI"},
+		{"REDW22", "Do Not Seek Absolution II"},
+		{"RSTR33", "Kicking Strauss Out of Camp"},
+		{"RBNP21", "The Course of True Love V"},
+		{"RCFSH1", "A Fisher of Fish I"},
+		{"RCRAW", "A Fine Night For It"},
+		{"RMRYB", "Mary-Beth"},
+		{"RTLLY", "Tilly"},
+		{"RRFA1", "Rains Fall"},
+		{"RMLLR1", "The American Inferno, Burnt Out I"},
+		{"RMLLR2", "The American Inferno, Burnt Out II"},
+		{"RMLLR3", "The American Inferno, Burnt Out III"},
+		{"RMLLR5", "The American Inferno, Burnt Out V"},
+
+		// Gunslingers
+		{"RCAL11", "The Noblest of Man And a Woman"},
+		{"RGUN12", "Emmett Granger"},
+		{"RGUN2", "Flaco Hernandez"},
+		{"RGUN3", "Billy Midnight"},
+		{"RGUN5", "Black Belle"},
+		{"RCAL12", "Riverboat"},
+		{"RCAL13", "Slim Grant"},
+
+		// Bounties
+		{"RBT05", "Bounty 1"}, // no clue how these are called
+		{"RBRAN", "Bounty 2"},
+		{"RBCON", "Bounty 3"},
+		{"RBT20", "Bounty 4"},
+		{"RBT22", "Bounty 5"},
+		{"RBDUL", "Bounty 6"},
+		{"RBT15", "Bounty 7"},
+		{"RBT12", "Bounty 8"},
+		{"RBT21", "Bounty 9"},
+		{"RBT03", "Bounty 10"},
+		{"RBT23", "Bounty 11"},
+		{"BOU01", "Bounty 12"}, 
+		// 2 missing?
+	};
+
 
     vars.starterCutscenes = new Dictionary<string,string>{
         {"RRVRD_", "-Chapter 2 (Horseshoe Overlook), Swanson mission"}, //not full cutscene name to avoid double split
@@ -167,11 +253,17 @@ startup
 	//Autosplitting
 	settings.Add("splitters", true, "Auto Splitters");
 	settings.Add("splitter_missions", true, "Main Mission", "splitters");
+	settings.Add("splitter_strangers", false, "Main Mission", "splitters");
 
-	// Add missions to setting list
+	// Add main missions to setting list
 	foreach (var script in vars.missionScripts) {
 		settings.Add(script.Key, true, script.Value, "splitter_missions");
-	}	
+	}
+
+	// Add side missions to setting list
+	foreach (var script in vars.strangerScripts) {
+		settings.Add(script.Key, true, script.Value, "splitter_strangers");
+	}
 
 	settings.Add("any_final_split", true, "Any% final split", "splitters");
 	
