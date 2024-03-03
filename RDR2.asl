@@ -173,11 +173,11 @@ startup
 		{"RCRKF1", "Geology For Beginners I"},
 		{"RCEXO1", "Duchesses And Other Animals I"},
 		{"REDW21", "Do Not Seek Absolution I"},
-		{"RBNP20", "Letter From Penelope"},
+		{"RBNP20", "The Course of True Love IV"},
+		{"RBNP21", "The Course of True Love V"},
 		{"RSTR31", "Money Lending And Other Sins VI"},
 		{"REDW22", "Do Not Seek Absolution II"},
 		{"RSTR33", "Kicking Strauss Out of Camp"},
-		{"RBNP21", "The Course of True Love V"},
 		{"RCFSH1", "A Fisher of Fish I"},
 		{"RCRAW", "A Fine Night For It"},
 		{"RMRYB", "Mary-Beth"},
@@ -198,19 +198,20 @@ startup
 		{"RCAL13", "Slim Grant"},
 
 		// Bounties
-		{"RBT05", "Bounty 1"}, // no clue how these are called
-		{"RBRAN", "Bounty 2"},
-		{"RBCON", "Bounty 3"},
-		{"RBT20", "Bounty 4"},
-		{"RBT22", "Bounty 5"},
-		{"RBDUL", "Bounty 6"},
-		{"RBT15", "Bounty 7"},
-		{"RBT12", "Bounty 8"},
-		{"RBT21", "Bounty 9"},
-		{"RBT03", "Bounty 10"},
-		{"RBT23", "Bounty 11"},
-		{"BOU01", "Bounty 12"}, 
-		// 2 missing?
+		{"BOU1", "Benedict Allbright"},
+		{"RBT05", "Ellie Anne Swan"},
+		{"RBRAN", "Mark Johnson"},
+		{"RBCON", "Lindsey Wofford"},
+		{"RBT20", "Elias Green"},
+		{"RBT22", "Joaquin Arroyo"},
+		{"RBDUL", "Joshua Brown"},
+		{"RBT15", "Anthony Foreman"},
+		{"RBT14", "Robbie Laidlaw"},
+		{"RBT18", "Otis Skinner"},
+		{"RBT12", "Camille de Millemont"},
+		{"RBT21", "Herman Zizendorf"},
+		{"RBT03", "Bart Cavanaugh"},
+		{"RBT23", "Esteban Cortez"},
 	};
 
 
