@@ -252,8 +252,8 @@ startup
 
 	//Autosplitting
 	settings.Add("splitters", true, "Auto Splitters");
-	settings.Add("splitter_missions", true, "Main Mission", "splitters");
-	settings.Add("splitter_strangers", false, "Main Mission", "splitters");
+	settings.Add("splitter_missions", true, "Main Missions", "splitters");
+	settings.Add("splitter_strangers", false, "Side Missions", "splitters");
 
 	// Add main missions to setting list
 	foreach (var script in vars.missionScripts) {
