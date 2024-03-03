@@ -291,7 +291,7 @@ split
 			}
 		else if ((settings["NBD1_"] && current.cutscene != old.cutscene && old.cutscene == "NBD1_EXT") || // Chapter 4 exception
 			(settings["FIN1_"] && current.cutscene == "FIN1_EXT" && old.cutscene == "") || // Chapter 6 exception
-			(settings["RBCH1_"] && current.cutscene == "RBCH1_RSC6_PTL" && old.cutscene == "")) // Epilogue 1 exception
+			(settings["RBCH1_"] && current.cutscene == "RBCH1_RSC6_PTL" && current.cutscene != old.cutscene)) // Epilogue 1 exception
 				flag_chapters = true;
 		else if	(vars.timeSpanSplit.Ticks != 0 && timer.CurrentTime.RealTime >= vars.timeSpanSplit) // Delayed split for chapter finish
 				flag_chapters = true;
