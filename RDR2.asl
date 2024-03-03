@@ -269,7 +269,7 @@ split
 		//if (current.cutscene != old.cutscene && (vars.finalCutscenes.ContainsKey(old.cutscene) ^ current.cutscene == "FIN1_EXT")) // Generic split with ch6 exception
 		//	flag_chapters = true;
 
-		if (current.in_cutscene + old.in_cutscene == old.in_cutscene)
+		if (current.in_cutscene + old.in_cutscene == old.in_cutscene) {
 			if (settings[current.cutscene] && vars.finalCutscenes.ContainsKey(current.cutscene) && current.cutscene == old.cutscene && vars.timeSpanSplit.Ticks == 0) { // Generic split
 				int sleep_delay = 0;
 
@@ -283,19 +283,24 @@ split
 					sleep_delay = 17733;
 				}
 				else if (current.cutscene == "RDTC3_RSC5"){
-					sleep_delay = 11133;
+					sleep_delay = 9133;
 				}
 
 				if (++(vars.cutsceneSkipCounter) == 1) //set the delay only if the cutscene was skipped certain amount of times, used to prevent double split
 					vars.timeSpanSplit = timer.CurrentTime.RealTime + new TimeSpan(0, 0, 0, 0, sleep_delay);
 			}
-		else if ((settings["NBD1_"] && current.cutscene != old.cutscene && old.cutscene == "NBD1_EXT") || // Chapter 4 exception
-			(settings["FIN1_"] && current.cutscene == "FIN1_EXT" && old.cutscene == "") || // Chapter 6 exception
-			(settings["RBCH1_"] && current.cutscene == "RBCH1_RSC6_PTL" && current.cutscene != old.cutscene)) // Epilogue 1 exception
+		}
+		
+		if ((settings["NBD1_"] && current.cutscene != old.cutscene && old.cutscene == "NBD1_EXT") || // Chapter 4 exception
+		    (settings["FIN1_"] && current.cutscene == "FIN1_EXT" && old.cutscene == "") || // Chapter 6 exception
+		    (settings["RBCH1_"] && current.cutscene == "RBCH1_RSC6_PTL" && current.cutscene != old.cutscene)) // Epilogue 1 exception
 				flag_chapters = true;
-		else if	(vars.timeSpanSplit.Ticks != 0 && timer.CurrentTime.RealTime >= vars.timeSpanSplit) // Delayed split for chapter finish
-				flag_chapters = true;
-			
+
+		if (vars.timeSpanSplit.Ticks != 0 && timer.CurrentTime.RealTime >= vars.timeSpanSplit) { // Delayed split for chapter finish
+			vars.timeSpanSplit = new TimeSpan();
+			flag_chapters = true;
+		}
+
 		if (current.cutscene != old.cutscene && vars.finalCutscenes.ContainsKey(old.cutscene)) // Reset cutsceneSkipCounter when the cutscene ends
 			vars.cutsceneSkipCounter = 0;
 	}
