@@ -147,7 +147,7 @@ startup
 	{"NBD1_", "-Chapter 4"},
 	{"RDTC3_RSC5", "-Chapter 5"},
 	{"FIN1_", "-Chapter 6"}, //changed
-	{"RBCH1_RSC6", "-Epilogue 1"},
+	{"RBCH1_", "-Epilogue 1"},
     };
 
 
@@ -279,21 +279,19 @@ split
 				else if (current.cutscene == "RDTC1_RSC6"){
 					sleep_delay = 8100;
 				}
-				else if (current.cutscene == "RDTC2_RSC4"){ // idk about last 3
+				else if (current.cutscene == "RDTC2_RSC4"){
 					sleep_delay = 17733;
 				}
 				else if (current.cutscene == "RDTC3_RSC5"){
 					sleep_delay = 11133;
-				}
-				else if (current.cutscene == "RBCH1_RSC6"){
-					sleep_delay = 14600;
 				}
 
 				if (++(vars.cutsceneSkipCounter) == 1) //set the delay only if the cutscene was skipped certain amount of times, used to prevent double split
 					vars.timeSpanSplit = timer.CurrentTime.RealTime + new TimeSpan(0, 0, 0, 0, sleep_delay);
 			}
 		else if ((settings["NBD1_"] && current.cutscene != old.cutscene && old.cutscene == "NBD1_EXT") || // Chapter 4 exception
-			(settings["FIN1_"] && current.cutscene == "FIN1_EXT" && old.cutscene == "")) // Chapter 6 exception
+			(settings["FIN1_"] && current.cutscene == "FIN1_EXT" && old.cutscene == "") || // Chapter 6 exception
+			(settings["RBCH1_"] && current.cutscene == "RBCH1_RSC6_PTL" && old.cutscene == "")) // Epilogue 1 exception
 				flag_chapters = true;
 		else if	(vars.timeSpanSplit.Ticks != 0 && timer.CurrentTime.RealTime >= vars.timeSpanSplit) // Delayed split for chapter finish
 				flag_chapters = true;
