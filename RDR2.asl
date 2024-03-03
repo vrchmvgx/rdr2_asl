@@ -145,7 +145,7 @@ startup
         {"RDTC1_RSC6", "-Chapter 2"},
 	{"RDTC2_RSC4", "-Chapter 3"},
 	{"NBD1_", "-Chapter 4"},
-	{"RDTC3_RSC5B", "-Chapter 5"},
+	{"RDTC3_RSC5", "-Chapter 5"},
 	{"FIN1_", "-Chapter 6"}, //changed
 	{"RBCH1_RSC6", "-Epilogue 1"},
     };
@@ -282,7 +282,7 @@ split
 				else if (current.cutscene == "RDTC2_RSC4"){ // idk about last 3
 					sleep_delay = 17733;
 				}
-				else if (current.cutscene == "RDTC3_RSC5B"){
+				else if (current.cutscene == "RDTC3_RSC5"){
 					sleep_delay = 11133;
 				}
 				else if (current.cutscene == "RBCH1_RSC6"){
