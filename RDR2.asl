@@ -24,6 +24,7 @@ startup
 		//Chapter 2
 		{"MUD3", "-Polite Society, Valentine Style"},
 		{"MUD2", "-Americans At Rest"},
+		{"RDOWN1", "-Money Lending And Other Sins I"},
 		{"RDOWN2", "-Money Lending And Other Sins II"},
 		{"RDST2", "-Paying A Social Call"},
 		{"HNT1", "-Exit Pursued By A Bruised Ego"},
@@ -32,6 +33,7 @@ startup
 		{"SEN1", "-The First Shall Be Last"},
 		{"UTP1", "-Blessed Are The Meek"},
 		{"RDOWN3", "-Money Lending And Other Sins III"},
+		{"RMARY1", "-We Loved Once and True I (Letter)"},
 		{"RMARY2", "-We Loved Once and True II"},	
 		//{"RMUD33", "-Pouring Fourth Oil III"},
 		{"RABI1", "-A Fisher of Men"},
@@ -96,6 +98,7 @@ startup
 		{"NTS2", "-Favored Sons"},
 		{"TRN3", "-The Bridge to Nowhere"},
 		{"NTS3", "-The King's Son"},
+		{"RDST61", "-Sadie Adler, Widow I"},
 		{"NTV3", "-My Last Boy"},
 		{"TRN4", "-Out Best Selves"},
 		{"FIN1", "-Red Dead Redemption"},
