@@ -357,7 +357,7 @@ start
 
 split
 {
-	bool flag_missions = (old.mission_counter == current.mission_counter - 1 || (old.mission_counter == current.mission_counter - 2 && old.mission == "BRT1") && settings[old.mission]); // mission split, advertising exception
+	bool flag_missions = ((old.mission_counter == current.mission_counter - 1 || (old.mission_counter == current.mission_counter - 2 && old.mission == "BRT1")) && settings[old.mission]); // mission split, advertising exception
 
 	bool flag_anyfinalsplit = (current.mission == "FIN2" && current.checkpoint == 13 && current.in_cutscene != 0 && old.in_cutscene == 0 && settings["any_final_split"]);
 	
