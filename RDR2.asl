@@ -67,7 +67,7 @@ startup
 		{"MOB2", "-Angelo Bronte, A Man of Honor"},
 		{"IND1", "-The Gilded Cage"},
 		{"SUS1", "-No, No, And Thrice, No"},
-		//{"", "American Fathers I (?)"},
+		{"RNATV1", "American Fathers I (?)"},
 		{"IND3", "-A Fine Night for Debauchery"},
 		{"RNATV2", "-American Fathers II"},
 		{"ODR4", "-Horsemen, Apocalypses"},
